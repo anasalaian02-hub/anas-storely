@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Anas Store - Dashboard</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#111;
+    color:white;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+.box{
+    background:#1f1f1f;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+input{
+    width:120px;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    padding:10px 20px;
+    background:#00c853;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+#orders{
+    margin-top:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>📋 لوحة إدارة Anas Store</h1>
+
+<div class="box">
+<h3>💱 سعر الصرف</h3>
+
+<input type="number" id="rate" placeholder="5.60">
+
+<button>حفظ</button>
+
+</div>
+
+<div class="box">
+
+<h3>📦 الطلبات</h3>
+
+<div id="orders">
+
+لا توجد طلبات...
+
+</div>
+
+</div>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs,
+doc,
+deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCBK8tj9YiBzuRGTM16xRUPTU_G8zYU5SQ",
+  authDomain: "anas-store-34d5b.firebaseapp.com",
+  projectId: "anas-store-34d5b",
+  storageBucket: "anas-store-34d5b.firebasestorage.app",
+  messagingSenderId: "1075583329709",
+  appId: "1:1075583329709:web:61183edc0d9b62f0782d24"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const ordersDiv = document.getElementById("orders");
+
+async function loadOrders(){
+
+ordersDiv.innerHTML="";
+
+const querySnapshot = await getDocs(collection(db,"orders"));
+
+querySnapshot.forEach((doc)=>{
+
+const data = doc.data();
+
+ordersDiv.innerHTML += `
+<div class="box">
+<b>👤 ${data.name}</b><br>
+📱 ${data.phone}<br>
+🛒 ${data.product}<br>
+💲 ${data.price}<br>
+📦 الكمية: ${data.quantity}<br>
+📝 ${data.notes}
+<br><br>
+<button onclick="deleteOrder('${doc.id}')">
+🗑️ حذف الطلب
+</button>
+</div>
+`;
+
+});
+
+}
+
+loadOrders();
+  window.deleteOrder = async function(id){
+
+if(confirm("هل تريد حذف هذا الطلب؟")){
+
+await deleteDoc(doc(db,"orders",id));
+
+loadOrders();
+
+}
+
+  }
+
+</script>
+</body>
+</html>
