@@ -372,7 +372,9 @@ import {
 getFirestore,
 collection,
 addDoc,
-serverTimestamp
+serverTimestamp,
+doc,
+getDoc
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -394,6 +396,52 @@ appId: "1:1075583329709:web:61183edc0d9b62f0782d24"
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+  let exchangeRate = 1;
+
+async function loadExchangeRate() {
+  try {
+    const docRef = doc(db, "settings", "exchange");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      exchangeRate = docSnap.data().rate;
+      updatePrices();
+    }
+  } catch (e) {
+    console.error("Error loading exchange rate:", e);
+  }
+}
+  function updatePrices(){
+
+document.querySelectorAll(".package").forEach(pkg=>{
+
+let span=pkg.querySelector("span");
+
+let text=span.innerHTML;
+
+let match=text.match(/\$([\d.]+)/);
+
+if(match){
+
+let usd=parseFloat(match[1]);
+
+let lyd=(usd*exchangeRate).toFixed(2);
+
+if(!text.includes("≈")){
+
+span.innerHTML += `<br><small>≈ ${lyd} د.ل</small>`;
+
+}else{
+
+span.innerHTML=text.replace(/≈.*د\.ل<\/small>/,`≈ ${lyd} د.ل</small>`);
+
+}
+
+}
+
+});
+
+  }
   function hidePages(){
 
 document.querySelectorAll(".page").forEach(function(page){
@@ -495,7 +543,9 @@ alert("Error sending order ❌");
 window.showPage = showPage;
 window.order = order;
 window.sendOrder = sendOrder;
-
+  
+loadExchangeRate();
+  
 showPage("home");
   </script>
 
