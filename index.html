@@ -120,6 +120,9 @@ height:100px;
 <body>
 
 <header>
+  <button id="logoutBtn" style="position:absolute;top:20px;right:20px;">
+  تسجيل الخروج
+  </button>
 
 <img src="logo.png">
 
@@ -366,7 +369,7 @@ placeholder="Notes (Optional)"></textarea>
 </div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import { auth } from "./firebase-config.js";
   import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {
@@ -403,6 +406,10 @@ const db = getFirestore(app);
   }
 });
   let exchangeRate = 1;
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
+});
 
 async function loadExchangeRate() {
   try {
