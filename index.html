@@ -367,7 +367,8 @@ placeholder="Notes (Optional)"></textarea>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
+import { auth } from "./firebase-config.js";
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
 getFirestore,
 collection,
@@ -396,6 +397,11 @@ appId: "1:1075583329709:web:61183edc0d9b62f0782d24"
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+  onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
   let exchangeRate = 1;
 
 async function loadExchangeRate() {
@@ -543,7 +549,6 @@ alert("Error sending order ❌");
 window.showPage = showPage;
 window.order = order;
 window.sendOrder = sendOrder;
-  
 loadExchangeRate();
   
 showPage("home");
