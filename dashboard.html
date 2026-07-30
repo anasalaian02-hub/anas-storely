@@ -57,7 +57,7 @@ button{
 
 <input type="number" id="rate" placeholder="5.60">
 
-<button>حفظ</button>
+<button onclick="saveRate()">حفظ</button>
 
 </div>
 
@@ -81,7 +81,9 @@ getFirestore,
 collection,
 getDocs,
 doc,
-deleteDoc
+deleteDoc,
+setDoc,
+getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -97,6 +99,23 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const ordersDiv = document.getElementById("orders");
+  const rateInput = document.getElementById("rate");
+
+async function loadRate() {
+  const snap = await getDoc(doc(db, "settings", "exchange"));
+
+  if (snap.exists()) {
+    rateInput.value = snap.data().rate;
+  }
+}
+
+async function saveRate() {
+  await setDoc(doc(db, "settings", "exchange"), {
+    rate: Number(rateInput.value)
+  });
+
+  alert("تم حفظ سعر الصرف ✅");
+}
 
 async function loadOrders(){
 
@@ -139,7 +158,8 @@ loadOrders();
 }
 
   }
-
+window.saveRate = saveRate;
+loadRate();
 </script>
 </body>
 </html>
