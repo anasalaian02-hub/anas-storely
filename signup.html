@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء حساب | Anas Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+background:#0d1117;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+padding:20px;
+}
+
+.card{
+
+width:100%;
+max-width:420px;
+
+background:#161b22;
+
+border:1px solid #30363d;
+
+border-radius:18px;
+
+padding:35px;
+
+box-shadow:0 0 25px rgba(0,255,255,.15);
+
+}
+
+.logo{
+
+font-size:32px;
+
+text-align:center;
+
+margin-bottom:10px;
+
+}
+
+h2{
+
+text-align:center;
+
+color:white;
+
+margin-bottom:30px;
+
+}
+
+.input-group{
+
+margin-bottom:18px;
+
+}
+
+label{
+
+display:block;
+
+color:#c9d1d9;
+
+margin-bottom:8px;
+
+font-size:15px;
+
+}
+
+input{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+outline:none;
+
+border-radius:10px;
+
+background:#21262d;
+
+color:white;
+
+font-size:15px;
+
+}
+
+input:focus{
+
+border:1px solid #00d4ff;
+
+}
+
+button{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:10px;
+
+background:#00bcd4;
+
+color:white;
+
+font-size:17px;
+
+cursor:pointer;
+
+margin-top:10px;
+
+transition:.3s;
+
+}
+
+button:hover{
+
+background:#0097a7;
+
+}
+
+.login-link{
+
+text-align:center;
+
+margin-top:20px;
+
+color:#c9d1d9;
+
+}
+
+.login-link a{
+
+color:#00d4ff;
+
+text-decoration:none;
+
+font-weight:bold;
+
+}
+
+#error{
+
+color:#ff4d4d;
+
+text-align:center;
+
+margin-top:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="logo">🛒</div>
+
+<h2>إنشاء حساب</h2>
+
+<div class="input-group">
+<label>الاسم الكامل</label>
+<input type="text" id="name" placeholder="اكتب اسمك">
+</div>
+
+<div class="input-group">
+<label>البريد الإلكتروني</label>
+<input type="email" id="email" placeholder="example@email.com">
+</div>
+
+<div class="input-group">
+<label>كلمة المرور</label>
+<input type="password" id="password" placeholder="********">
+</div>
+
+<div class="input-group">
+<label>تأكيد كلمة المرور</label>
+<input type="password" id="confirmPassword" placeholder="********">
+</div>
+
+<button id="signupBtn">
+إنشاء حساب
+</button>
+
+<div id="error"></div>
+
+<div class="login-link">
+لديك حساب؟
+<a href="login.html">
+تسجيل الدخول
+</a>
+</div>
+
+</div>
+<script type="module">
+
+import { auth, db } from "./firebase-config.js";
+
+import {
+createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+doc,
+setDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const signupBtn = document.getElementById("signupBtn");
+const error = document.getElementById("error");
+
+signupBtn.addEventListener("click", async () => {
+
+const name = document.getElementById("name").value.trim();
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value;
+const confirmPassword = document.getElementById("confirmPassword").value;
+
+error.innerHTML = "";
+
+if(name === "" || email === "" || password === "" || confirmPassword === ""){
+error.innerHTML = "يرجى تعبئة جميع الحقول";
+return;
+}
+
+if(password !== confirmPassword){
+error.innerHTML = "كلمتا المرور غير متطابقتين";
+return;
+}
+
+if(password.length < 6){
+error.innerHTML = "كلمة المرور يجب أن تكون 6 أحرف أو أكثر";
+return;
+}
+
+try{
+
+const userCredential = await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user = userCredential.user;
+
+await setDoc(doc(db,"users",user.uid),{
+
+name:name,
+email:email,
+balance:0,
+role:"user",
+createdAt:serverTimestamp()
+
+});
+
+window.location.href="login.html";
+
+}catch(e){
+
+error.innerHTML=e.message;
+
+}
+
+});
+
+</script>
+</body>
+</html>
