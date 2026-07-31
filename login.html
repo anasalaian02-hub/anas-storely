@@ -46,7 +46,19 @@ text-align:center;
 color:#fff;
 margin-bottom:30px;
 }
+h1{
+text-align:center;
+color:#ffffff;
+font-size:30px;
+margin-bottom:5px;
+}
 
+.store-name{
+text-align:center;
+color:#00d4ff;
+font-size:16px;
+margin-bottom:20px;
+}
 .input-group{
 margin-bottom:18px;
 }
@@ -113,7 +125,8 @@ font-weight:bold;
 <div class="card">
 
 <div class="logo">🛒</div>
-
+<h1>متجر أنس</h1>
+<p class="store-name">Anas Store</p>
 <h2>تسجيل الدخول</h2>
 
 <div class="input-group">
@@ -129,7 +142,7 @@ font-weight:bold;
 <button id="loginBtn">
 تسجيل الدخول
 </button>
-
+<a href="#" id="forgotPassword">نسيت كلمة المرور؟</a>
 <div id="error"></div>
 
 <div class="signup">
@@ -144,12 +157,29 @@ font-weight:bold;
 import { auth } from "./firebase-config.js";
 
 import {
-signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const loginBtn=document.getElementById("loginBtn");
 const error=document.getElementById("error");
+document.getElementById("forgotPassword").addEventListener("click", async (e) => {
+  e.preventDefault();
 
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    alert("أدخل بريدك الإلكتروني أولاً.");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.");
+  } catch (error) {
+    alert("تعذر إرسال الرابط. تأكد من صحة البريد الإلكتروني.");
+  }
+});
 loginBtn.addEventListener("click",async()=>{
 
 const email=document.getElementById("email").value.trim();
