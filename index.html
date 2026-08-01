@@ -112,7 +112,125 @@ textarea{
 resize:none;
 height:100px;
 }
+.logout-btn{
+  display:block;
+  width:220px;
+  margin:30px auto;
+  background:#d32f2f;
+  color:#fff;
+  font-size:18px;
+  font-weight:bold;
+  border:none;
+  border-radius:12px;
+  padding:14px;
+  cursor:pointer;
+}
 
+.logout-btn:hover{
+  background:#b71c1c;
+}
+  .store-name{
+  margin-top:10px;
+  font-size:20px;
+  font-weight:bold;
+  color:#FFD700;
+  text-shadow:0 0 8px rgba(255,215,0,.6);
+  letter-spacing:1px;
+  }
+  #langBtn{
+  margin-top:15px;
+  background:#ffffff;
+  color:#0088cc;
+  border:none;
+  border-radius:20px;
+  padding:10px 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+#langBtn:hover{
+  background:#f0f0f0;
+}
+  #menuBtn{
+  position:absolute;
+  top:20px;
+  left:20px;
+  background:transparent;
+  border:none;
+  color:white;
+  font-size:30px;
+  cursor:pointer;
+  }
+  .side-menu{
+  position:fixed;
+  top:0;
+  left:-260px;
+  width:250px;
+  height:100%;
+  background:#0088cc;
+  box-shadow:2px 0 10px rgba(0,0,0,.2);
+  transition:.3s;
+  padding-top:70px;
+  z-index:1000;
+}
+
+.side-menu a{
+  display:block;
+  padding:15px 20px;
+  color:#ffffff;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.side-menu a:hover{
+  background:#f2f2f2;
+}
+  .menu-header{
+  text-align:center;
+  padding:20px;
+}
+
+.menu-header h2{
+  color:#fff;
+  margin-bottom:8px;
+}
+
+.menu-header p{
+  color:#FFD700;
+  font-size:14px;
+  margin-bottom:15px;
+}
+
+.menu-header hr{
+  border:none;
+  height:1px;
+  background:rgba(255,255,255,.3);
+}
+  .language-modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.5);
+  justify-content:center;
+  align-items:center;
+  z-index:2000;
+}
+
+.language-box{
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  width:300px;
+  text-align:center;
+}
+
+.language-box button{
+  width:100%;
+  margin:10px 0;
+}
 </style>
 
 </head>
@@ -120,102 +238,122 @@ height:100px;
 <body>
 
 <header>
-  <button id="logoutBtn" style="position:absolute;top:20px;right:20px;">
-  تسجيل الخروج
-  </button>
+  <button id="menuBtn">☰</button>
 
-<img src="logo.png">
 
 <h1>Anas Store</h1>
 
-<p>Your Digital Hub</p>
-
+<p class="store-name">✦ وجهتك الأولى للخدمات الرقمية ✦</p>
+  
 </header>
+  <div id="sideMenu" class="side-menu">
+    <div class="menu-header">
+  <h2>Anas Store</h2>
+  <p>وجهتك الأولى للخدمات الرقمية</p>
+  <hr>
+    </div>
+  <a href="#" id="servicesMenu">🛍️ الخدمات</a>
+<a href="#" id="langMenu">🌐 اللغة</a>
+<a href="#" id="ordersMenu">📦 طلباتي</a>
+<a href="#" id="walletMenu">💳 إضافة أموال</a>
+<a href="#" id="supportMenu">💬 الدعم</a>
+<a href="#" id="logoutMenu">🚪 تسجيل الخروج</a>
+  </div>
+<div id="languageModal" class="language-modal">
+  <div class="language-box">
+    <h2>اختر اللغة</h2>
 
+    <button id="chooseArabic">🇱🇾 العربية</button>
+
+    <button id="chooseEnglish">🇺🇸 English</button>
+
+    <button id="closeLanguage">❌ إغلاق</button>
+  </div>
+</div>
 <div class="container">
 
 <div id="home" class="page">
 
 <div class="card">
-<h2>TikTok Coins</h2>
-<p>Recharge TikTok Coins</p>
-<button onclick="showPage('tiktok')">Open</button>
+<h2 id="tiktokTitle" data-translate="tiktokTitle">TikTok Coins</h2>
+<p data-translate="tiktokDesc">Recharge TikTok Coins</p>
+<button id="tiktokBtn" 
+  data-translate="openBtn"
+  onclick="showPage('tiktok')" data-translate="openBtn">Open</button>
+</div>
+<div class="card">
+<h2 data-translate="premiumTitle">Telegram Premium</h2>
+<p data-translate="premiumDesc">Buy Telegram Premium</p>
+<button onclick="showPage('premium')" data-translate="openBtn">Open</button>
 </div>
 
 <div class="card">
-<h2>Telegram Premium</h2>
-<p>Buy Telegram Premium</p>
-<button onclick="showPage('premium')">Open</button>
+<h2 data-translate="starsTitle">Telegram Stars</h2>
+<p data-translate="starsDesc">Buy Telegram Stars</p>
+<button onclick="showPage('stars')" data-translate="openBtn">Open</button>
 </div>
 
 <div class="card">
-<h2>Telegram Stars</h2>
-<p>Buy Telegram Stars</p>
-<button onclick="showPage('stars')">Open</button>
-</div>
+<h2 data-translate="adsTitle">Sponsored Ads</h2>
+<p data-translate="adsDesc">Advertise on Facebook</p>
+<button onclick="showPage('ads')" data-translate="openBtn">Open</button>
 
-<div class="card">
-<h2>Sponsored Ads</h2>
-<p>Advertise Your Channel</p>
-<button onclick="showPage('ads')">Open</button>
 </div>
-
 </div>
 <div id="tiktok" class="page">
 
-<h2>TikTok Coins</h2>
+<h2 data-translate="tiktokTitle">TikTok Coins</h2>
 
 <div class="package">
 <span>1000 Coins - $12.50</span>
-<button onclick="order('1000 TikTok Coins','$12.50')">Order Now</button>
+<<button onclick="order('1000 TikTok Coins','$12.50')" data-translate="orderNow">Order Now</button>
 </div>
-
-<div class="package">
+  <div class="package">
 <span>2000 Coins - $25.00</span>
-<button onclick="order('2000 TikTok Coins','$25.00')">Order Now</button>
+<button onclick="order('2000 TikTok Coins','$25.00')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>3000 Coins - $37.50</span>
-<button onclick="order('3000 TikTok Coins','$37.50')">Order Now</button>
+<button onclick="order('3000 TikTok Coins','$37.50')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>4000 Coins - $50.00</span>
-<button onclick="order('4000 TikTok Coins','$50.00')">Order Now</button>
+<button onclick="order('4000 TikTok Coins','$50.00')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>5000 Coins - $62.50</span>
-<button onclick="order('5000 TikTok Coins','$62.50')">Order Now</button>
+<button onclick="order('5000 TikTok Coins','$62.50')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>6000 Coins - $75.00</span>
-<button onclick="order('6000 TikTok Coins','$75.00')">Order Now</button>
+<button onclick="order('6000 TikTok Coins','$75.00')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>7000 Coins - $87.50</span>
-<button onclick="order('7000 TikTok Coins','$87.50')">Order Now</button>
+<button onclick="order('7000 TikTok Coins','$87.50')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>8000 Coins - $100.00</span>
-<button onclick="order('8000 TikTok Coins','$100.00')">Order Now</button>
+<button onclick="order('8000 TikTok Coins','$100.00')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>9000 Coins - $112.50</span>
-<button onclick="order('9000 TikTok Coins','$112.50')">Order Now</button>
+<button onclick="order('9000 TikTok Coins','$112.50')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>10000 Coins - $125.00</span>
-<button onclick="order('10000 TikTok Coins','$125.00')">Order Now</button>
+<button onclick="order('10000 TikTok Coins','$125.00')" data-translate="orderNow">Order Now</button>
 </div>
 
-<button class="back" onclick="showPage('home')">Back</button>
+<button class="back" data-translate="backBtn" onclick="showPage('home')"data-translate="backBtn">Back</button>
 
 </div>
 <div id="premium" class="page">
@@ -224,25 +362,25 @@ height:100px;
 
 <div class="package">
 <span>1 Month - $5.29</span>
-<button onclick="order('Telegram Premium 1 Month','$5.29')">Order Now</button>
+<button onclick="order('Telegram Premium 1 Month','$5.29')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>3 Months - $14.71</span>
-<button onclick="order('Telegram Premium 3 Months','$14.71')">Order Now</button>
+<button onclick="order('Telegram Premium 3 Months','$14.71')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>6 Months - $19.41</span>
-<button onclick="order('Telegram Premium 6 Months','$19.41')">Order Now</button>
+<button onclick="order('Telegram Premium 6 Months','$19.41')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>1 Year - $33.53</span>
-<button onclick="order('Telegram Premium 1 Year','$33.53')">Order Now</button>
+<button onclick="order('Telegram Premium 1 Year','$33.53')" data-translate="orderNow">Order Now</button>
 </div>
 
-<button class="back" onclick="showPage('home')">Back</button>
+<button class="back" onclick="showPage('home')"data-translate="backBtn">Back</button>
 
 </div>
 <div id="stars" class="page">
@@ -251,40 +389,40 @@ height:100px;
 
 <div class="package">
 <span>100 Stars - $2.94</span>
-<button onclick="order('100 Telegram Stars','$2.94')">Order Now</button>
+<button onclick="order('100 Telegram Stars','$2.94')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>500 Stars - $10.00</span>
-<button onclick="order('500 Telegram Stars','$10.00')">Order Now</button>
+<button onclick="order('500 Telegram Stars','$10.00')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>750 Stars - $17.65</span>
-<button onclick="order('750 Telegram Stars','$17.65')">Order Now</button>
+<button onclick="order('750 Telegram Stars','$17.65')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>1000 Stars - $18.82</span>
-<button onclick="order('1000 Telegram Stars','$18.82')">Order Now</button>
+<button onclick="order('1000 Telegram Stars','$18.82')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>1500 Stars - $26.47</span>
-<button onclick="order('1500 Telegram Stars','$26.47')">Order Now</button>
+<button onclick="order('1500 Telegram Stars','$26.47')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>2500 Stars - $43.53</span>
-<button onclick="order('2500 Telegram Stars','$43.53')">Order Now</button>
+<button onclick="order('2500 Telegram Stars','$43.53')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>5000 Stars - $84.71</span>
-<button onclick="order('5000 Telegram Stars','$84.71')">Order Now</button>
+<button onclick="order('5000 Telegram Stars','$84.71')" data-translate="orderNow">Order Now</button>
 </div>
 
-<button class="back" onclick="showPage('home')">Back</button>
+<button class="back" onclick="showPage('home')"data-translate="backBtn">Back</button>
 
 </div>
 <div id="ads" class="page">
@@ -293,50 +431,49 @@ height:100px;
 
 <div class="package">
 <span>Reach 3,000 - 10,000 | 1-5 Days | $6.67</span>
-<button onclick="order('Sponsored Ads Package 1','$6.67')">Order Now</button>
+<button onclick="order('Sponsored Ads Package 1','$6.67')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>Reach 12,000 - 36,000 | $13.33</span>
-<button onclick="order('Sponsored Ads Package 2','$13.33')">Order Now</button>
+<button onclick="order('Sponsored Ads Package 2','$13.33')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>Reach 19,000 - 54,000 | $20.00</span>
-<button onclick="order('Sponsored Ads Package 3','$20.00')">Order Now</button>
+<button onclick="order('Sponsored Ads Package 3','$20.00')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>Reach 25,000 - 72,000 | $26.67</span>
-<button onclick="order('Sponsored Ads Package 4','$26.67')">Order Now</button>
+<button onclick="order('Sponsored Ads Package 4','$26.67')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>Reach 31,000 - 90,000 | $33.33</span>
-<button onclick="order('Sponsored Ads Package 5','$33.33')">Order Now</button>
+<button onclick="order('Sponsored Ads Package 5','$33.33')" data-translate="orderNow">Order Now</button>
 </div>
 
 <div class="package">
 <span>Reach 37,000 - 108,000 | $40.00</span>
-<button onclick="order('Sponsored Ads Package 6','$40.00')">Order Now</button>
+<button onclick="order('Sponsored Ads Package 6','$40.00')" data-translate="orderNow">Order Now</button>
 </div>
 
-<button class="back" onclick="showPage('home')">Back</button>
+<button class="back" onclick="showPage('home')"data-translate="backBtn">Back</button>
 
 </div>
 <div id="orderPage" class="page">
 
-<h2>Order Form</h2>
+<h2 data-translate="orderFormTitle">Order Form</h2>
 
 <input
 type="text"
 id="customerName"
-placeholder="Your Name">
-
+placeholder="Your Name" data-translate-placeholder="yourName">
 <input
 type="text"
 id="customerPhone"
-placeholder="Phone Number">
+placeholder="Phone Number" data-translate-placeholder="phoneNumber">
 
 <input
 type="text"
@@ -358,11 +495,12 @@ min="1">
 
 <textarea
 id="notes"
-placeholder="Notes (Optional)"></textarea>
+placeholder="Notes (Optional)"
+data-translate-placeholder="notes"></textarea>
 
-<button onclick="sendOrder()">Submit Order</button>
+<button onclick="sendOrder()" data-translate="submitOrder">Submit Order</button>
 
-  <button class="back" onclick="showPage('home')">Back</button>
+  <button class="back" onclick="showPage('home')"data-translate="backBtn">Back</button>
 
 </div>
 
@@ -407,10 +545,6 @@ const db = getFirestore(app);
   }
 });
   let exchangeRate = 1;
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await signOut(auth);
-  window.location.href = "login.html";
-});
 
 async function loadExchangeRate() {
   try {
@@ -495,7 +629,7 @@ let notes=document.getElementById("notes").value;
 
 if(name==""||phone==""){
 
-alert("Please enter your name and phone number.");
+alert(translations[isArabic ? "ar" : "en"].fillFields);
 
 return;
 
@@ -515,7 +649,7 @@ createdAt:serverTimestamp()
 
 });
 
-alert("Your order has been received successfully ✅");
+alert(translations[isArabic ? "ar" : "en"].orderSuccess);
 let message =
 `🛒 New Order
 
@@ -548,7 +682,7 @@ showPage("home");
 
 console.error(error);
 
-alert("Error sending order ❌");
+alert(translations[isArabic ? "ar" : "en"].orderError);
 
 }
 
@@ -558,8 +692,141 @@ window.showPage = showPage;
 window.order = order;
 window.sendOrder = sendOrder;
 loadExchangeRate();
-  
+  const translations = {
+  en: {
+    orderError: "Error sending order ❌",
+    orderSuccess: "Your order has been received successfully ✅",
+    fillFields: "Please enter your name and phone number.",
+submitOrder: "Submit Order",
+    coins1000: "1000 Coins - $12.50",
+    submitOrder: "Submit Order",
+    yourName: "Your Name",
+phoneNumber: "Phone Number",
+notes: "Notes (Optional)",
+    orderFormTitle: "Order Form",
+    backBtn: "Back",
+    orderNow: "Order Now",
+    openBtn: "Open",
+    adsTitle: "Sponsored Ads",
+adsDesc: "Advertise on Facebook",
+    starsTitle: "Telegram Stars",
+starsDesc: "Buy Telegram Stars",
+    premiumDesc: "Buy Telegram Premium",
+    tiktokDesc: "Recharge TikTok Coins",
+    premiumTitle: "Telegram Premium",
+    services: "🛍️ Services",
+language: "🌐 Language",
+orders: "📦 My Orders",
+wallet: "💳 Add Funds",
+support: "💬 Support",
+logout: "🚪 Logout",
+    tiktokTitle: "TikTok Coins"
+  },
+  ar: {
+    orderError: "حدث خطأ أثناء إرسال الطلب ❌",
+    orderSuccess: "تم استلام طلبك بنجاح ✅",
+    fillFields: "يرجى إدخال الاسم ورقم الهاتف.",
+    submitOrder: "إرسال الطلب",
+    coins1000: "1000 عملة - 12.50$",
+    submitOrder: "إرسال الطلب",
+    yourName: "الاسم",
+phoneNumber: "رقم الهاتف",
+notes: "ملاحظات (اختياري)",
+    orderFormTitle: "نموذج الطلب",
+    backBtn: "رجوع",
+    orderNow: "اطلب الآن",
+    openBtn: "فتح",
+    adsTitle: "إعلانات ممولة",
+adsDesc: "إعلانات ممولة على فيسبوك",
+    starsTitle: "نجوم تيليجرام",
+starsDesc: "شراء نجوم تيليجرام",
+    premiumDesc: "شراء تيليجرام بريميوم",
+    tiktokDesc: "شحن عملات تيك توك",
+    premiumTitle: "تيليجرام بريميوم",
+    services: "🛍️ الخدمات",
+language: "🌐 اللغة",
+orders: "📦 طلباتي",
+wallet: "💳 إضافة أموال",
+support: "💬 الدعم",
+logout: "🚪 تسجيل الخروج",
+    orderFormTitle: "نموذج الطلب",
+    tiktokTitle: "عملات تيك توك"
+  }
+};
+  function changeLanguage(lang) {
+    isArabic = (lang === "ar");
+
+    document.getElementById("tiktokTitle").textContent =
+        translations[lang].tiktokTitle;
+   document.getElementById("servicesMenu").textContent = translations[lang].services;
+document.getElementById("langMenu").textContent = translations[lang].language;
+    document.querySelectorAll('[data-translate="openBtn"]').forEach(btn => {
+    btn.textContent = translations[lang].openBtn;
+});
+    document.getElementById("ordersMenu").textContent = translations[lang].orders;
+document.getElementById("ordersMenu").textContent = translations[lang].orders;
+document.getElementById("walletMenu").textContent = translations[lang].wallet;
+document.getElementById("supportMenu").textContent = translations[lang].support;
+document.getElementById("logoutMenu").textContent = translations[lang].logout; 
+    document.querySelectorAll("[data-translate]").forEach(el => {
+    const key = el.dataset.translate;
+    if (translations[lang][key]) {
+        el.textContent = translations[lang][key];
+    }
+});
+    document.querySelectorAll("[data-translate-placeholder]").forEach(el => {
+    const key = el.dataset.translatePlaceholder;
+    if (translations[lang][key]) {
+        el.placeholder = translations[lang][key];
+    }
+});
+  }
+  let isArabic = false;
+
+  const menuBtn = document.getElementById("menuBtn");
+const sideMenu = document.getElementById("sideMenu");
+  const languageModal =
+    document.getElementById("languageModal");
+document.getElementById("chooseArabic").addEventListener("click", () => {
+    localStorage.setItem("language", "ar");
+    languageModal.style.display = "none";
+    changeLanguage("ar");
+});
+document.getElementById("chooseEnglish").addEventListener("click", () => {
+    languageModal.style.display = "none";
+  localStorage.setItem("language", "en");
+    changeLanguage("en");
+});  
+
+document.getElementById("langMenu").addEventListener("click", (e) => {
+  e.preventDefault();
+  sideMenu.style.left = "-260px";
+  languageModal.style.display = "flex";
+});
+
+document.getElementById("closeLanguage").addEventListener("click", () => {
+  languageModal.style.display = "none";
+});
+  document.getElementById("logoutMenu").addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "login.html";
+});
+
+menuBtn.addEventListener("click", () => {
+  sideMenu.style.left =
+    sideMenu.style.left === "0px" ? "-260px" : "0px";
+});
+  document.addEventListener("click", (e) => {
+  if (!sideMenu.contains(e.target) && e.target !== menuBtn) {
+    sideMenu.style.left = "-260px";
+  }
+});
 showPage("home");
+  const savedLanguage = localStorage.getItem("language");
+
+if (savedLanguage) {
+    changeLanguage(savedLanguage);
+}
   </script>
 
 </body>
