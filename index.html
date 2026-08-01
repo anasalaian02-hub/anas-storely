@@ -505,7 +505,16 @@ data-translate-placeholder="notes"></textarea>
 </div>
 
 </div>
+<div id="myOrders" class="page">
+    <h2>📦 طلباتي</h2>
+    <div id="ordersList">
+        لا توجد طلبات حتى الآن.
+    </div>
 
+    <button class="back" onclick="showPage('home')">
+        رجوع
+    </button>
+</div>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
   import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -645,6 +654,7 @@ product:product,
 price:price,
 quantity:quantity,
 notes:notes,
+  userId: auth.currentUser.uid,
 createdAt:serverTimestamp()
 
 });
@@ -821,6 +831,12 @@ menuBtn.addEventListener("click", () => {
     sideMenu.style.left = "-260px";
   }
 });
+  document.getElementById("ordersMenu").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "orders.html";
+});
+
+showPage("home");
 showPage("home");
   const savedLanguage = localStorage.getItem("language");
 
