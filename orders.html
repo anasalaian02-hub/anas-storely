@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلباتي</title>
+  <style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:20px;
+}
+    .header{
+    background:#0d8bd8;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    border-radius:0 0 20px 20px;
+    margin:-20px -20px 25px -20px;
+}
+
+.header h1{
+    margin:0;
+    font-size:36px;
+}
+
+.header p{
+    margin-top:10px;
+    color:#ffd700;
+    font-size:18px;
+}
+
+h2{
+    color:#222;
+  text-align: center;
+}
+
+#ordersContainer{
+    background:#fff;
+    border-radius:12px;
+    padding:15px;
+    margin:20px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+.order-card{
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    border-left: 5px solid #0d8bd8;
+  transition: .3s;
+}
+    .order-card:hover{
+    transform: translateY(-3px);
+    }
+
+.order-card h3{
+    margin:0 0 10px;
+    color:#0d8bd8;
+}
+
+.order-card p{
+    margin:5px 0;
+}
+button{
+    background:#0d8bd8;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+  display: block;
+margin: 20px auto;
+}
+  </style>
+</head>
+<body>
+<div class="header">
+    <h1>Anas Store</h1>
+    <p>✨ وجهتك الأولى للخدمات الرقمية ✨</p>
+</div>
+<h2>📦 طلباتي</h2>
+  <div id="ordersContainer">
+    
+  </div>
+  <p id="noOrders">📦 لا توجد طلبات حتى الآن.</p>
+
+<button onclick="window.location.href='index.html'">
+    ⬅️ الرجوع للرئيسية
+</button>
+<script type="module">
+  import { auth } from "./firebase-config.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  const db = getFirestore();
+  onAuthStateChanged(auth, async (user) => {
+if (!user) return;
+    const ordersRef = collection(db, "orders");
+    const snapshot = await getDocs(ordersRef);
+    const ordersContainer = document.getElementById("ordersContainer");
+    ordersContainer.innerHTML = "";
+    snapshot.forEach((doc) => {
+    const order = doc.data();
+      if (order.userId !== user.uid) return;
+      const card = document.createElement("div");
+      card.className = "order-card";
+      card.innerHTML = `<h3>${order.product}</h3>`;
+      ordersContainer.appendChild(card);
+
+});
+});
+</script>
+</body>
+</html>
